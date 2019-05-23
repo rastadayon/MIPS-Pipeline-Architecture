@@ -3,6 +3,12 @@ module new_hazard_unit( input jump, branch_equal, branch_not_equal, equal, not_e
 		flush = 0;
 		IF_ID_write = 1;
 		pc_ld = 1;
+
+		//nop
+		/*if(nop) begin
+			IF_ID_write = 0;
+			pc_ld = 0;
+		end*/
 		//flush after jump
 		if(jump)
 			flush = 1;
