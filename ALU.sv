@@ -1,4 +1,4 @@
-module ALU (input[31:0] A, B, input[2:0] ALUop, output reg [31:0] ALUres);
+module ALU (input signed [31:0] A, B, input[2:0] ALUop, output reg signed[31:0] ALUres);
 	always@(A, B, ALUop) begin
 		ALUres = 32'b0;
 		case(ALUop)
