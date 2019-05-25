@@ -7,7 +7,8 @@ module pipeline (input clk, rst);
 		.clk(clk),
 		.rst(rst),
 		.in (pcIn),
-		.out(pcOut)
+		.out(pcOut),
+		.ld(pcLoad)
 	);
 
 
@@ -139,7 +140,7 @@ module pipeline (input clk, rst);
 	//--------------------------------------------------------
 	wire [31 : 0] shiftedADR;
 
-	shifter #(32, 1) shifter_(
+	shifter #(32, 2) shifter_(
 	.in(extendedADR), 
 	.out(shiftedADR)
 	);
@@ -195,7 +196,7 @@ module pipeline (input clk, rst);
 	.ID_EXE_immediate_out(ID_EX_address_out), 
 	.EXE_reg_rs(ID_EX_Rs_out), 
 	.EXE_reg_rt(ID_EX_Rt_out), 
-	.EXE_reg_rd(ID_EX_R6_out)
+	.EXE_reg_rd(ID_EX_Rd_out)
 	);
 
 	//--------------------------------------------------------
