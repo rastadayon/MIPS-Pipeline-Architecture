@@ -58,18 +58,39 @@ module pipeline (input clk, rst);
 	);
 
 	//-----------------------------------------------------
-	wire J, BEQ, BNE, equal, notEqual;
+	wire J, BEQ, BNE, equal, notEqual, nop;
 
-	new_hazard_unit hazardUnit(
-	.jump(J), 
-	.branch_equal(BEQ), 
-	.branch_not_equal(BNE), 
-	.equal(equal), 
-	.not_equal(notEqual), 
-	.flush(flush), 
-	.pc_ld(pcLoad), 
-	.IF_ID_write(IF_ID_write)
+	// new_hazard_unit hazardUnit(
+	// .jump(J), 
+	// .branch_equal(BEQ), 
+	// .branch_not_equal(BNE), 
+	// .equal(equal), 
+	// .not_equal(notEqual), 
+	// .flush(flush), 
+	// .pc_ld(pcLoad), 
+	// .IF_ID_write(IF_ID_write)
+	// );
+
+	hazard_unit HU(
+	.branch_equal(BEQ),
+	.branch_not_equal(BNE),
+	.equal(equal),
+	.not_equal(notEqual),
+	.jump(J),
+	.ID_EXE_mem_mem_read(ID_EX_memRead_out),
+	.EXE_MEM_mem_mem_read(EX_MEM_memRead_out),
+	.ID_EXE_reg_write(ID_EX_regWrite_out),
+	.EXE_MEM_reg_write(EX_MEM_regWrite_out),
+	.IF_ID_rs(IF_ID_inst_out[25 : 21]),
+	.IF_ID_rt(IF_ID_inst_out[20 : 16]),
+	.ID_EXE_reg_dest(ID_EX_regDest),
+	.EXE_MEM_reg_dest(EX_MEM_Rd_out),
+	.IF_ID_write(IF_ID_write),
+	.pc_ld(pcLoad),
+	.flush(flush),
+	.nop(nop)
 	);
+
 
 	//-------------------------------------------------------
 	wire NOP, RTYPE, LW, SW;
