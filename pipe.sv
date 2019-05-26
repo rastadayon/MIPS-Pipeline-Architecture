@@ -58,7 +58,7 @@ module new_pipeline (input clk, rst);
 	);
 
 	//-----------------------------------------------------
-	wire J, BEQ, BNE, equal, notEqual, nop;
+	wire J, BEQ, BNE, equal, notEqual, hu_nop_out;
 
 	// new_hazard_unit hazardUnit(
 	// .jump(J), 
@@ -83,7 +83,8 @@ module new_pipeline (input clk, rst);
 	.opcode(IF_ID_inst_out[31 : 26]), 
 	.func(IF_ID_inst_out[5 : 0]), 
 	.equal(equal), 
-	.notEqual(notEqual), 
+	.notEqual(notEqual),
+	.nopIn(hu_nop_out), 
 	.Rtype(RTYPE), 
 	.lw(LW), 
 	.sw(SW), 
@@ -351,7 +352,7 @@ module new_pipeline (input clk, rst);
 	.IF_ID_write(IF_ID_write),
 	.pc_ld(pcLoad),
 	.flush(flush),
-	.nop(nop)
+	.nop(hu_nop_out)
 	);
 
 endmodule
