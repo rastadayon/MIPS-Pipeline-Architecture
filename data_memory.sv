@@ -11,6 +11,12 @@ module data_memory(input clk, rst, mem_read, mem_write, input [31:0] address, wr
 		else if(mem_write)
 			data_mem[address] <= write_data;
 	end
+	integer k;
+	initial begin
+		for(k = 0; k < 10; k = k + 1)begin
+			data_mem[k] <= k;
+		end
+	end
 	
 	assign read_data = (mem_read && address >= 0 && address < 1024) ? data_mem[address] : 32'b0;
 endmodule
