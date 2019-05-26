@@ -163,8 +163,10 @@ module pipeline (input clk, rst);
 
 	//-----------------------------------------------------------
 	wire [31 : 0] ID_EX_immidiate_out;
-	wire ID_EX_memToReg_out, ID_EX_regWrite_out, ID_EX_memWrite_out, ID_EX_memRead_out, ID_EX_ALUsrc_out, 
-	ID_EX_regDest_out, ID_EX_ALUop_out, ID_EX_pcPlus4, ID_EX_readData1_out, ID_EX_readData2_out, ID_EX_address_out, ID_EX_Rs_out, ID_EX_Rt_out, ID_EX_Rd_out;
+	wire ID_EX_memToReg_out, ID_EX_regWrite_out, ID_EX_memWrite_out, ID_EX_memRead_out, ID_EX_ALUsrc_out, ID_EX_regDest_out;
+	wire [2:0] ID_EX_ALUop_out;
+	wire [31:0] ID_EX_pcPlus4, ID_EX_readData1_out, ID_EX_readData2_out, ID_EX_address_out;
+	wire [4:0] ID_EX_Rs_out, ID_EX_Rt_out, ID_EX_Rd_out;
 
 	ID_EXE ID_EX(
 	.clk(clk), 
@@ -183,7 +185,7 @@ module pipeline (input clk, rst);
 	.ID_EXE_rs_in(IF_ID_inst_out[25 : 21]), 
 	.ID_EXE_rt_in(IF_ID_inst_out[20 : 16]), 
 	.ID_EXE_rd_in(IF_ID_inst_out[15 : 11]), 
-	.ID_EXE_mem_to_reg_out(ID_EXE_memToReg_out), 
+	.ID_EXE_mem_to_reg_out(ID_EX_memToReg_out), 
 	.ID_EXE_reg_write_out(ID_EX_regWrite_out), 
 	.ID_EXE_mem_write_out(ID_EX_memWrite_out), 
 	.ID_EXE_mem_read_out(ID_EX_memRead_out), 
@@ -251,8 +253,8 @@ module pipeline (input clk, rst);
 	);
 
 	//------------------------------------------------------------
-	wire EX_MEM_memToReg_out, EX_MEM_regWrite_out;
-	wire [31 : 0] EX_MEM_writeData_out, EX_MEM_memWrite_out, EX_MEM_memRead_out;
+	wire EX_MEM_memToReg_out, EX_MEM_regWrite_out, EX_MEM_memWrite_out, EX_MEM_memRead_out;
+	wire [31 : 0] EX_MEM_writeData_out ;
 	wire [4 : 0] EX_MEM_Rd_out;
 
 	EXE_MEM EX_MEM(
@@ -271,7 +273,7 @@ module pipeline (input clk, rst);
 	.EXE_MEM_mem_read_out(EX_MEM_memRead_out),
 	.EXE_MEM_address_out(EX_MEM_address_out), 
 	.EXE_MEM_write_data_out(EX_MEM_writeData_out), 
-	.EXE_MEM_reg_dest_out(EX_MEM_writeData_out)
+	.EXE_MEM_reg_dest_out(EX_MEM_Rd_out)
 	);
 
 	//------------------------------------------------------------
