@@ -263,7 +263,7 @@ module pipeline (input clk, rst);
 	.EXE_MEM_mem_write_in(ID_EX_memWrite_out), 
 	.EXE_MEM_mem_read_in(ID_EX_memRead_out), 
 	.EXE_MEM_alu_res_in(ALUres), 
-	.EXE_MEM_rt_in(ID_EX_Rt_out), 
+	.EXE_MEM_write_data_in(ID_EX_data2), 
 	.EXE_MEM_reg_dest_in(ID_EX_regDest), 
 	.EXE_MEM_mem_to_reg_out(EX_MEM_memToReg_out), 
 	.EXE_MEM_reg_write_out(EX_MEM_regWrite_out), 
