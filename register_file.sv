@@ -10,6 +10,12 @@ module register_file (input clk, rst, reg_write, input[4:0] read_reg1, read_reg2
 		if(reg_write && write_reg != 5'b0)
 			registers[write_reg] <= write_data;
 	end
+	integer j;
+	initial begin
+		for(j = 0; j < 32; j = j + 1)begin
+			registers[j] <= 32'd0;
+		end
+	end
 	assign read_data1 = registers[read_reg1];
 	assign read_data2 = registers[read_reg2];
 endmodule
