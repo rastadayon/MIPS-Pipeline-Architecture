@@ -13,7 +13,7 @@ module register_file (input clk, rst, reg_write, input[4:0] read_reg1, read_reg2
 	integer j;
 	initial begin
 		for(j = 0; j < 32; j = j + 1)begin
-			registers[j] <= 32'd0;
+			registers[j] <= j;
 		end
 	end
 	assign read_data1 = registers[read_reg1];

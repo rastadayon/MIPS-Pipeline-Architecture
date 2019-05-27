@@ -1,6 +1,6 @@
 module ATB ();
 	reg clk = 0, rst = 0;
-	pipe test(clk, rst);
+	new_pipeline test(clk, rst);
 
 	always #50 clk = ~clk;
 

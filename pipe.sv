@@ -166,7 +166,6 @@ module new_pipeline (input clk, rst);
 	);
 
 	//-----------------------------------------------------------
-	wire [31 : 0] ID_EX_immidiate_out;
 	wire ID_EX_memToReg_out, ID_EX_regWrite_out, ID_EX_memWrite_out, ID_EX_memRead_out, ID_EX_ALUsrc_out, ID_EX_regDest_out;
 	wire [2:0] ID_EX_ALUop_out;
 	wire [31:0] ID_EX_pcPlus4, ID_EX_readData1_out, ID_EX_readData2_out, ID_EX_address_out;
@@ -206,11 +205,11 @@ module new_pipeline (input clk, rst);
 	);
 
 	//--------------------------------------------------------
-	wire [31 : 0] ID_EX_pcOut, ID_EX_data1, ID_EX_data2, EX_MEM_address_out, aluData2, A, B;
+	wire [31 : 0] ID_EX_pcOut, EX_MEM_address_out, aluData2, A, B;
 	wire [1 : 0] frwrdA, frwrdB;
 
 	mux3to1 aSrcMux (
-	.in0(ID_EX_data1), 
+	.in0(ID_EX_readData1_out), 
 	.in1(EX_MEM_address_out), 
 	.in2(writeDataOut), 
 	.sel(frwrdA), 
@@ -220,7 +219,7 @@ module new_pipeline (input clk, rst);
 	//-----------------------------------------------------------
 
 	mux3to1 bSrcMux (
-	.in0(ID_EX_data2), 
+	.in0(ID_EX_readData2_out),
 	.in1(EX_MEM_address_out), 
 	.in2(writeDataOut), 
 	.sel(frwrdB), 
@@ -231,8 +230,8 @@ module new_pipeline (input clk, rst);
 
 	mux2to1 #(32) ALUbMux(
 	.in0(aluData2), 
-	.in1(ID_EX_immidiate_out), 
-	.sel(ALUsrc), 
+	.in1(ID_EX_address_out), 
+	.sel(ID_EX_ALUsrc_out), 
 	.out(B)
 	);
 
@@ -269,7 +268,7 @@ module new_pipeline (input clk, rst);
 	.EXE_MEM_mem_write_in(ID_EX_memWrite_out), 
 	.EXE_MEM_mem_read_in(ID_EX_memRead_out), 
 	.EXE_MEM_alu_res_in(ALUres), 
-	.EXE_MEM_write_data_in(ID_EX_data2), 
+	.EXE_MEM_write_data_in(aluData2), 
 	.EXE_MEM_reg_dest_in(ID_EX_regDest), 
 	.EXE_MEM_mem_to_reg_out(EX_MEM_memToReg_out), 
 	.EXE_MEM_reg_write_out(EX_MEM_regWrite_out), 

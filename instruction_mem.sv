@@ -1,5 +1,5 @@
 `timescale 1ns/1ns
-module instruction_mem #(parameter n = 32'd4294967295, width = 8, pc = 32)(input[pc-1 : 0] address, output [pc-1 : 0] out_inst);
+module instruction_mem #(parameter n = 400, width = 8, pc = 32)(input[pc-1 : 0] address, output [pc-1 : 0] out_inst); //32'd4294967295
 	reg [width-1:0] insts [0:n-1];
 	integer i;
 	initial begin

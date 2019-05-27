@@ -4,11 +4,11 @@ module data_memory(input clk, rst, mem_read, mem_write, input [31:0] address, wr
 	integer i;
 	integer j;
 	always@(posedge clk, posedge rst) begin
-		if(rst)
-			for(i = 0; i < 1024; i = i + 1)
-				data_mem[i] <= 32'b0;
+		// if(rst)
+		// 	for(i = 0; i < 1024; i = i + 1)
+		// 		data_mem[i] <= 32'b0;
 
-		else if(mem_write)
+		/*else*/ if(mem_write)
 			data_mem[address] <= write_data;
 	end
 	integer k;
