@@ -10,7 +10,7 @@ module cu(input [5:0] opcode, func, input equal, notEqual, nopIn, output reg Rty
 		else begin
 			case(opcode)
 				6'b000000: begin //Rtype
-					Rtype <= 1'b1; lw <= 1'b0; sw <= 1'b0; j <= 1'b0; beq <= 1'b0; bne <= 1'b0; 
+					Rtype <= 1'b1; lw <= 1'b0; sw <= 1'b0; j <= 1'b0; beq <= 1'b0; bne <= 1'b0; nop <= 1'b0; 
 					memWrite <= 1'b0; memRead <= 1'b0; PCsrc <= 2'd0; ALUsrc <= 1'b0; regDest <= 1'b1; regWrite <= 1'b1; memToReg <= 1'b0;
 					case(func)
 						ADD: ALUop <= 3'b000; //add
