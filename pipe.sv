@@ -170,6 +170,7 @@ module new_pipeline (input clk, rst);
 	wire [2:0] ID_EX_ALUop_out;
 	wire [31:0] ID_EX_pcPlus4, ID_EX_readData1_out, ID_EX_readData2_out, ID_EX_address_out;
 	wire [4:0] ID_EX_Rs_out, ID_EX_Rt_out, ID_EX_Rd_out;
+	wire ID_EXE_Rtype_out, ID_EXE_lw_out, ID_EXE_sw_out, ID_EXE_j_out , ID_EXE_beq_out, ID_EXE_bne_out, ID_EXE_nop_out;
 
 	ID_EXE ID_EX(
 	.clk(clk), 
@@ -201,27 +202,58 @@ module new_pipeline (input clk, rst);
 	.ID_EXE_address_out(ID_EX_address_out), 
 	.ID_EXE_rs_out(ID_EX_Rs_out), 
 	.ID_EXE_rt_out(ID_EX_Rt_out), 
-	.ID_EXE_rd_out(ID_EX_Rd_out)
+	.ID_EXE_rd_out(ID_EX_Rd_out),
+	.ID_EXE_Rtype_in(RTYPE), 
+	.ID_EXE_lw_in(LW), 
+	.ID_EXE_sw_in(SW), 
+	.ID_EXE_j_in(J) , 
+	.ID_EXE_beq_in(BEQ), 
+	.ID_EXE_bne_in(BNE), 
+	.ID_EXE_nop_in(NOP), 
+	.ID_EXE_Rtype_out(ID_EXE_Rtype_out), 
+	.ID_EXE_lw_out(ID_EXE_lw_out), 
+	.ID_EXE_sw_out(ID_EXE_sw_out), 
+	.ID_EXE_j_out(ID_EXE_j_out) , 
+	.ID_EXE_beq_out(ID_EXE_beq_out), 
+	.ID_EXE_bne_out(ID_EXE_bne_out), 
+	.ID_EXE_nop_out(ID_EXE_nop_out)
 	);
 
 	//--------------------------------------------------------
 	wire [31 : 0] ID_EX_pcOut, EX_MEM_address_out, aluData2, A, B;
 	wire [1 : 0] frwrdA, frwrdB;
 
+	// mux3to1 aSrcMux (
+	// .in0(ID_EX_readData1_out), 
+	// .in1(EX_MEM_address_out), 
+	// .in2(writeDataOut), 
+	// .sel(frwrdA), 
+	// .out(A)
+	// );
 	mux3to1 aSrcMux (
 	.in0(ID_EX_readData1_out), 
-	.in1(EX_MEM_address_out), 
-	.in2(writeDataOut), 
+	.in1(writeDataOut), 
+	.in2(EX_MEM_address_out), 
 	.sel(frwrdA), 
 	.out(A)
 	);
 
+
+
 	//-----------------------------------------------------------
+
+	// mux3to1 bSrcMux (
+	// .in0(ID_EX_readData2_out),
+	// .in1(EX_MEM_address_out), 
+	// .in2(writeDataOut), 
+	// .sel(frwrdB), 
+	// .out(aluData2)
+	// ); 
 
 	mux3to1 bSrcMux (
 	.in0(ID_EX_readData2_out),
-	.in1(EX_MEM_address_out), 
-	.in2(writeDataOut), 
+	.in1(writeDataOut), 
+	.in2(EX_MEM_address_out), 
 	.sel(frwrdB), 
 	.out(aluData2)
 	); 
@@ -259,6 +291,7 @@ module new_pipeline (input clk, rst);
 	wire EX_MEM_memToReg_out, EX_MEM_regWrite_out, EX_MEM_memWrite_out, EX_MEM_memRead_out;
 	wire [31 : 0] EX_MEM_writeData_out ;
 	wire [4 : 0] EX_MEM_Rd_out;
+	wire EXE_MEM_Rtype_out, EXE_MEM_lw_out, EXE_MEM_sw_out, EXE_MEM_j_out, EXE_MEM_beq_out, EXE_MEM_bne_out, EXE_MEM_nop_out;
 
 	EXE_MEM EX_MEM(
 	.clk(clk), 
@@ -276,7 +309,21 @@ module new_pipeline (input clk, rst);
 	.EXE_MEM_mem_read_out(EX_MEM_memRead_out),
 	.EXE_MEM_address_out(EX_MEM_address_out), 
 	.EXE_MEM_write_data_out(EX_MEM_writeData_out), 
-	.EXE_MEM_reg_dest_out(EX_MEM_Rd_out)
+	.EXE_MEM_reg_dest_out(EX_MEM_Rd_out),
+	.EXE_MEM_Rtype_in(ID_EXE_Rtype_out), 
+	.EXE_MEM_lw_in(ID_EXE_lw_out), 
+	.EXE_MEM_sw_in(ID_EXE_sw_out), 
+	.EXE_MEM_j_in(ID_EXE_j_out), 
+	.EXE_MEM_beq_in(ID_EXE_beq_out), 
+	.EXE_MEM_bne_in(ID_EXE_bne_out), 
+	.EXE_MEM_nop_in(ID_EXE_nop_out), 
+	.EXE_MEM_Rtype_out(EXE_MEM_Rtype_out),
+	.EXE_MEM_lw_out(EXE_MEM_lw_out), 
+	.EXE_MEM_sw_out(EXE_MEM_sw_out), 
+	.EXE_MEM_j_out(EXE_MEM_j_out), 
+	.EXE_MEM_beq_out(EXE_MEM_beq_out), 
+	.EXE_MEM_bne_out(EXE_MEM_bne_out), 
+	.EXE_MEM_nop_out(EXE_MEM_nop_out)
 	);
 
 	//------------------------------------------------------------
@@ -309,6 +356,8 @@ module new_pipeline (input clk, rst);
 	//----------------------------------------------------------
 	wire MEM_WB_memToReg_out;
 	wire [31 : 0] MEM_WB_readData_out, MEM_WB_address_out;
+	wire MEM_WB_Rtype_out, MEM_WB_lw_out, 
+	MEM_WB_sw_out, MEM_WB_j_out , MEM_WB_beq_out, MEM_WB_bne_out, MEM_WB_nop_out;
 
 	MEM_WB MEM_WB_(
 	.clk(clk), 
@@ -322,7 +371,21 @@ module new_pipeline (input clk, rst);
 	.MEM_WB_reg_write_out(MEM_WB_regWrite_out), 
 	.MEM_WB_read_data_out(MEM_WB_readData_out), 
 	.MEM_WB_address_out(MEM_WB_address_out), 
-	.MEM_WB_reg_dest_out(MEM_WB_Rd_out)
+	.MEM_WB_reg_dest_out(MEM_WB_Rd_out),
+	.MEM_WB_Rtype_in(EXE_MEM_Rtype_out), 
+	.MEM_WB_lw_in(EXE_MEM_lw_out), 
+	.MEM_WB_sw_in(EXE_MEM_sw_out), 
+	.MEM_WB_j_in(EXE_MEM_j_out),
+	.MEM_WB_beq_in(EXE_MEM_beq_out), 
+	.MEM_WB_bne_in(EXE_MEM_bne_out), 
+	.MEM_WB_nop_in(EXE_MEM_nop_out), 
+	.MEM_WB_Rtype_out(MEM_WB_Rtype_out), 
+	.MEM_WB_lw_out(MEM_WB_lw_out), 
+	.MEM_WB_sw_out(MEM_WB_sw_out), 
+	.MEM_WB_j_out(MEM_WB_j_out), 
+	.MEM_WB_beq_out(MEM_WB_beq_out), 
+	.MEM_WB_bne_out(MEM_WB_bne_out),
+	.MEM_WB_nop_out( MEM_WB_nop_out)
 	);
 
 	//-----------------------------------------------------
