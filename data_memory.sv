@@ -13,7 +13,7 @@ module data_memory(input clk, rst, mem_read, mem_write, input [31:0] address, wr
 	end
 	integer k;
 	initial begin
-		for(k = 0; k < 10; k = k + 1)begin
+		for(k = 0; k < 11; k = k + 1)begin
 			data_mem[k] <= k;
 		end
 	end
