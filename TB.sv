@@ -9,7 +9,9 @@ module ATB ();
 		rst = 1;
 		#70;
 		rst = 0;
-		#70;
+		//#460
+		//$stop;
+		
 	end
 
 endmodule
