@@ -7,7 +7,7 @@ module FU (output reg [1:0] frwrdA, frwrdB, input [4:0] EX_Rd, MEM_Rd, ID_Rs, ID
 		if(EX_regWrite && EX_Rd == ID_Rs && EX_Rd != 5'b00000) // from MEM
 			frwrdA = 2'd2;
 		else if(MEM_regWrite && MEM_Rd == ID_Rs && MEM_Rd != 5'b00000) // from EXE
-			frwrdA = 2'b1;
+			frwrdA = 2'd1;
 		
 
 

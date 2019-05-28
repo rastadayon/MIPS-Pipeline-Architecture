@@ -105,11 +105,12 @@ module new_pipeline (input clk, rst);
 	//-------------------------------------------------------------
 	wire [31 : 0] readData1, readData2, writeDataOut;
 	wire [4 : 0] MEM_WB_Rd_out;
+	wire MEM_WB_regWrite_out;
 
 	register_file registerFile(
 	.clk(clk), 
 	.rst(rst), 
-	.reg_write(regWrite), 
+	.reg_write(MEM_WB_regWrite_out),
 	.read_reg1(IF_ID_inst_out[25:21]), 
 	.read_reg2(IF_ID_inst_out[20:16]), 
 	.write_reg(MEM_WB_Rd_out), 
@@ -327,7 +328,7 @@ module new_pipeline (input clk, rst);
 	);
 
 	//------------------------------------------------------------
-	wire MEM_WB_regWrite_out;
+	
 
 	FU fu(
 	.frwrdA(frwrdA), 

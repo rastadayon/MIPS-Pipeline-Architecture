@@ -15,7 +15,7 @@ module hazard_unit(input [5:0] op_code, input equal, not_equal, ID_EXE_mem_mem_r
 		nop = 0;
 
 		//stall after lw with data hazard
-		if( ID_EXE_mem_mem_read && ( (IF_ID_rs == ID_EXE_reg_dest) || (IF_ID_rt == ID_EXE_reg_dest) ) && ID_EXE_reg_dest != 5'b0 ) begin
+		if(ID_EXE_mem_mem_read && ( (IF_ID_rs == ID_EXE_reg_dest) || (IF_ID_rt == ID_EXE_reg_dest) ) && ID_EXE_reg_dest != 5'b0 ) begin
 			$display("stallllllllllllllll for lwwwwwwwwwwwwwwwwwwwww");
 			stall = 1;
 			pc_ld = 0;
