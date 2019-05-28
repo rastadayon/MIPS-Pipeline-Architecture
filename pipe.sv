@@ -397,12 +397,12 @@ module new_pipeline (input clk, rst);
 	.out(writeDataOut)
 	);
 
+	//------------------------------------------------------
+	
 	hazard_unit HU(
-	.branch_equal(BEQ),
-	.branch_not_equal(BNE),
+	.op_code(IF_ID_inst_out[31 : 26]),
 	.equal(equal),
 	.not_equal(notEqual),
-	.jump(J),
 	.ID_EXE_mem_mem_read(ID_EX_memRead_out),
 	.EXE_MEM_mem_mem_read(EX_MEM_memRead_out),
 	.ID_EXE_reg_write(ID_EX_regWrite_out),

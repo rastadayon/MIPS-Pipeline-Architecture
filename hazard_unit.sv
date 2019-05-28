@@ -1,5 +1,10 @@
-module hazard_unit(input branch_equal, branch_not_equal, equal, not_equal, jump, ID_EXE_mem_mem_read, EXE_MEM_mem_mem_read, ID_EXE_reg_write, EXE_MEM_reg_write, input [4:0] IF_ID_rs, IF_ID_rt, ID_EXE_reg_dest, EXE_MEM_reg_dest, output reg IF_ID_write, pc_ld, flush, nop);
+module hazard_unit(input [5:0] op_code, input equal, not_equal, ID_EXE_mem_mem_read, EXE_MEM_mem_mem_read, ID_EXE_reg_write, EXE_MEM_reg_write, input [4:0] IF_ID_rs, IF_ID_rt, ID_EXE_reg_dest, EXE_MEM_reg_dest, output reg IF_ID_write, pc_ld, flush, nop);
 	reg stall = 0;
+	wire branch_equal = 1'b0, branch_not_equal = 1'b0, jump = 1'b0;
+	parameter BEQ = 6'b000100, BNE = 6'b000101, JUMP = 6'b000010;
+	assign branch_equal = (op_code == BEQ) ? 1'b1: 1'b0;
+	assign branch_not_equal = (op_code == BNE) ? 1'b1 : 1'b0;
+	assign jump = (op_code == JUMP) ? 1'b1 : 1'b0;
 	always@(*) begin
 		stall = 0;
 		flush = 0;
