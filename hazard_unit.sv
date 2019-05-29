@@ -50,11 +50,11 @@ module hazard_unit(input [5:0] op_code, input equal, not_equal, ID_EXE_mem_mem_r
 		end
 
 		//flush after jump
-		if(jump)
+		if(jump && ~stall)
 			flush = 1;
 
 		//flush after beq or bneq
-		if( (branch_equal && equal) || (branch_not_equal && not_equal) )
+		if( (branch_equal && equal) || (branch_not_equal && not_equal) && ~stall)
 			flush = 1;
 	end
 endmodule // hazard_unit

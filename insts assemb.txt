@@ -1,4 +1,6 @@
 lw R2, R0(5) // R2 = 5
 add R6, R2, R0 // R6 = 5
 and R7, R6, R0 // R7 = 0
-beq R7,R0 (8) //pc baas bepare be 48
+beq R7,R0 (1) //pc baas bepare be hamun dasture baadi
+lw R8, R0,(10) // R8 = 10
+bne R8, R7, (2) // bepare 8 ta jolo tar
