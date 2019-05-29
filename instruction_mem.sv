@@ -8,7 +8,7 @@ module instruction_mem #(parameter n = 400, width = 8, pc = 32)(input[pc-1 : 0] 
 		end
 	end
 	initial begin
-		$readmemb("instructions.txt", insts);
+		$readmemb("test code.txt", insts);
 	end
   	assign out_inst = (address >= 0 && address < n) ? {insts[address], insts[address + 1], insts[address + 2], insts[address + 3]} : {4*width{1'b0}};
 endmodule

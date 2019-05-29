@@ -1,0 +1,22 @@
+R9 <- res
+R1-R5 <- data
+R6 <- 1
+R7 <- i
+R8 <- 5
+
+R6 = 1;
+R7 = 0;
+R8 = 5;
+
+R9 <- meghdare max ghabli = 0
+R1 <- meghdare jadide load shode
+lw R1, R7 (1000)
+slt R10, R1, R9 //age meghdare R10 shod 0 bayad R9 avaz she
+bne R10, R0 (1)
+>> add R9, R1, R0
+add R7, R7, R6
+bne R7, R8, (0)
+
+
+
+

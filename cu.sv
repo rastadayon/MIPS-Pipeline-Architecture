@@ -22,7 +22,7 @@ module cu(input [5:0] opcode, func, input equal, notEqual, nopIn, output reg Rty
 						SUB: ALUop <= 3'b001; //sub
 						AND: ALUop <= 3'b010; //and
 						OR: ALUop <= 3'b011; //or
-						SLT: ALUop <= 3'b100; //slt
+						SLT: ALUop <= 3'b100;  //slt 
 						default: ALUop <= 3'b111; //nop
 					endcase
 				end

@@ -12,9 +12,12 @@ module register_file (input clk, rst, reg_write, input[4:0] read_reg1, read_reg2
 	end
 	integer j;
 	initial begin
-		for(j = 0; j < 32; j = j + 1)begin
-			registers[j] <= j;
-		end
+		registers[6] <= 32'd1; // sabete 1
+		registers[7] <= 32'd0; // i
+		registers[8] <= 32'd5;
+		registers[0] <= 32'd0;
+		registers[1] <= 32'd0;
+		registers[9] <= 32'd0;
 	end
 	assign read_data1 = registers[read_reg1];
 	assign read_data2 = registers[read_reg2];
